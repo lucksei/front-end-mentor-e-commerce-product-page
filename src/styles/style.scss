@@ -1,0 +1,29 @@
+@use "./_reset.scss" as *;
+@use "./_attribution.scss" as *;
+@use "./_style_guide.scss" as *;
+
+// Styles
+body {
+  color: $orange;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $light-grayish-blue;
+  border: 1px solid $black;
+}
+
+.header--left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header--right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

@@ -1,8 +1,20 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
+import './styles/style.scss';
+
+import Header from './components/header.jsx';
+import Card from './components/card.jsx';
+import Attribution from './components/attribution.jsx';
+
 const App = () => {
-    return <h1>Hello world!</h1>;
+    return (
+        <>
+            <Header></Header>
+            <Card></Card>
+            <Attribution></Attribution>
+        </>
+    );
 }
 
 const container = document.getElementById('react-root');
