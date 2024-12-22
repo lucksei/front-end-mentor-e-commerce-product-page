@@ -1,0 +1,36 @@
+// Styles
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $white;
+  padding: 1rem 0.7rem 1rem 0.7rem;
+}
+
+.header--left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header--right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header--logo {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem;
+  padding: 0;
+}
+
+.header--button {
+  @include icon-button(1.6rem, 1.6rem);
+}
+
+.header--profile {
+  @include icon-button(2.3rem, 2.3rem);
+}
