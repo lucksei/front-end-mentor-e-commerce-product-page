@@ -31,6 +31,10 @@ module.exports = {
                     loader: 'babel-loader',
                 }
             },
+            {
+                test: /\.(png|svg|jpe?g|gif)$/i, // test for .svg, png, jpg, gif files
+                type: 'asset/resource',
+            },
         ],
     },
     plugins: [

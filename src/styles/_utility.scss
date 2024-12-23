@@ -1,3 +1,18 @@
 .hidden {
   display: none !important;
 }
+
+@mixin icon-button($h, $w) {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  margin: 0 0.5rem;
+  height: $h;
+  width: $w;
+  cursor: pointer;
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}

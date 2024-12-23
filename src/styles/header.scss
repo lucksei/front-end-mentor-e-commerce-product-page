@@ -1,4 +1,8 @@
-// Styles
+@use "./style_guide.scss" as *;
+@use "./utility.scss" as *;
+
+// Header Styles
+
 .header {
   display: flex;
   flex-direction: row;
@@ -33,4 +37,17 @@
 
 .header--profile {
   @include icon-button(2.3rem, 2.3rem);
+}
+
+// Sidebar Styles
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background-color: orange;
+  border: 1px solid $black;
+
+  ul {
+    list-style-type: none;
+  }
 }

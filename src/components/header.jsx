@@ -5,14 +5,13 @@ function Header() {
   return (
     <header className="header">
       <div className="header--left">
-        <SidebarButton></SidebarButton>
-        <h1>{headerTitle}</h1>
         <Sidebar></Sidebar>
+        <SidebarButton></SidebarButton>
+        <h1>
+          <Logo></Logo>
+        </h1>
       </div>
       <div className="header--right">
-        <button>+</button>
-        <div>0</div>
-        <button>-</button>
         <CartButton></CartButton>
         <ProfileButton></ProfileButton>
       </div>
@@ -20,30 +19,54 @@ function Header() {
   );
 }
 
+export default Header;
+
+function Logo() {
+  return (
+    <img
+      src={require("./../../images/logo.svg")}
+      alt="logo"
+      className="header--logo"
+    ></img>
+  );
+}
+
 function Sidebar() {
   return (
     <>
-      <ul>
-        <li>Collections</li>
-        <li>Men</li>
-        <li>Women</li>
-        <li>About</li>
-        <li>Contact</li>
-      </ul>
+      <div className="sidebar hidden">
+        <ul>
+          <li>Collections</li>
+          <li>Men</li>
+          <li>Women</li>
+          <li>About</li>
+          <li>Contact</li>
+        </ul>
+      </div>
     </>
   );
 }
 
 function SidebarButton() {
-  return <button>Menu</button>;
+  return (
+    <button className="header--button">
+      <img src={require("./../../images/icon-menu.svg")} alt="menu"></img>
+    </button>
+  );
 }
 
 function CartButton() {
-  return <button>Add to cart</button>;
+  return (
+    <button className="header--button">
+      <img src={require("./../../images/icon-cart.svg")} alt="cart"></img>
+    </button>
+  );
 }
 
 function ProfileButton() {
-  return <button>Profile</button>;
+  return (
+    <button className="header--button header--profile">
+      <img src={require("./../../images/image-avatar.png")} alt="profile"></img>
+    </button>
+  );
 }
-
-export default Header;

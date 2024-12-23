@@ -1,0 +1,53 @@
+@use "./style_guide.scss" as *;
+@use "./utility.scss" as *;
+
+// Card Carousel Styles
+
+.carousel {
+  position: relative;
+  overflow-x: hidden;
+
+  @media (min-width: $screen-medium) {
+    border-radius: 1.4rem;
+  }
+}
+.carousel--img-container {
+  display: flex;
+  width: 100% * 4;
+  height: auto;
+  flex-direction: row;
+}
+
+.carousel--img {
+  width: 100%;
+  height: auto;
+}
+
+.carousel--button {
+  position: absolute;
+  @include icon-button(2.8rem, 2.8rem);
+  background-color: $light-grayish-blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  top: 50%;
+  z-index: 1;
+
+  img {
+    width: 35%;
+    height: 50%;
+  }
+  &.left {
+    left: 1rem;
+    img {
+      margin-left: -2px;
+    }
+  }
+  &.right {
+    right: 1rem;
+    img {
+      margin-left: 2px;
+    }
+  }
+}

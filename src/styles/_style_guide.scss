@@ -16,6 +16,12 @@ $font-size: 16px; // Paragraph
 // Typography -- Font
 $font-family: "Kumbh Sans", sans-serif; // https://fonts.google.com/specimen/Kumbh+Sans
 $weights: (
-  regular: 400,
-  bold: 700,
+  "regular": 400,
+  "bold": 700,
 );
+
+// Screen Breakpoints
+$screen-small: 576px;
+$screen-medium: 768px;
+$screen-large: 992px;
+$screen-xlarge: 1200px;

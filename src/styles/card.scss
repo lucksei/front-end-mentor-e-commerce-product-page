@@ -1,0 +1,181 @@
+@use "sass:map";
+@use "./style_guide.scss" as *;
+@use "./utility.scss" as *;
+
+@use "./catalog.scss" as *;
+
+// Card Styles
+
+.card {
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: $screen-medium) {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    grid-template-rows: auto;
+    max-width: 950px;
+    max-height: 300px;
+  }
+}
+
+// Card Body Styles
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.7rem 1.5rem 1.7rem 1.5rem;
+  background-color: $white;
+
+  @media (min-width: $screen-medium) {
+    display: grid;
+    grid-template-columns: min-content auto;
+    grid-template-rows: repeat(5, min-content);
+    padding: 1.7rem 4.5rem 1.7rem 4.5rem;
+  }
+
+  h1 {
+    font-size: 0.8rem;
+    font-weight: map.get($weights, "bold");
+    color: $dark-grayish-blue;
+    margin: 0 0 0.8rem 0;
+
+    @media (min-width: $screen-medium) {
+      grid-column: 1 / 3;
+    }
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: map.get($weights, "bold");
+    color: $very-dark-blue;
+    margin: 0 0 0.8rem 0;
+
+    @media (min-width: $screen-medium) {
+      grid-column: 1 / 3;
+    }
+  }
+
+  p {
+    font-size: 0.8rem;
+    font-weight: map.get($weights, "regular");
+    line-height: 1.5rem;
+    color: $dark-grayish-blue;
+    margin: 0 0 0.8rem 0;
+
+    @media (min-width: $screen-medium) {
+      grid-column: 1 / 3;
+    }
+  }
+}
+
+.card-body--price-group {
+  display: grid;
+  grid-template-columns: max-content max-content 1fr;
+  grid-template-rows: auto;
+  flex-direction: row;
+  justify-self: start;
+  align-items: center;
+  font-weight: map.get($weights, "bold");
+
+  .price-group--price {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+  }
+  .price-group--discount {
+    font-size: 0.8rem;
+    color: $white;
+    background-color: $black;
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+    border-radius: 0.4rem;
+  }
+  .price-group--old {
+    font-size: 0.8rem;
+    color: $grayish-blue;
+    text-decoration: line-through;
+    justify-self: flex-end;
+  }
+
+  @media (min-width: $screen-medium) {
+    .price-group--price {
+      grid-column: 1 / 2;
+    }
+
+    .price-group--discount {
+      grid-column: 2 / 3;
+    }
+
+    .price-group--old {
+      grid-column: 1 / 3;
+      justify-self: flex-start;
+    }
+  }
+}
+
+.card-body--quantity {
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  grid-template-rows: auto;
+  margin: 1rem 0 0 0;
+  height: 2.8rem;
+
+  @media (min-width: $screen-medium) {
+    grid-column: 1 / 2;
+    max-width: min-content;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  button,
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $light-grayish-blue;
+    font-weight: map.get($weights, "bold");
+    font-size: 1rem;
+    height: 100%;
+    border: 0;
+    padding: 0 1.2rem 0 1.2rem;
+  }
+
+  .quantity--button-minus {
+    border-radius: 0.4rem 0 0 0.4rem;
+  }
+
+  .quantity--button-plus {
+    border-radius: 0 0.4rem 0.4rem 0;
+  }
+}
+
+.card-body--cart {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 0.4rem;
+  background-color: $orange;
+  color: $black;
+  margin: 1rem 0 0 0;
+  padding: 0.8rem 0 0.8rem 0;
+  font-size: 1rem;
+  font-weight: map.get($weights, "bold");
+  height: 2.8rem;
+
+  @media (min-width: $screen-medium) {
+    grid-column: 2 / 3;
+    max-height: min-content;
+  }
+
+  span {
+    margin-right: 0.8rem;
+  }
+
+  img {
+    transform: scale(0.8);
+    filter: brightness(0);
+  }
+}
