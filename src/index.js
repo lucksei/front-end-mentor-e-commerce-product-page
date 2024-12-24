@@ -8,13 +8,15 @@ import Card from './components/card.jsx';
 import Attribution from './components/attribution.jsx';
 
 const App = () => {
-    return (
-        <>
-            <Header></Header>
-            <Card></Card>
-            <Attribution></Attribution>
-        </>
-    );
+  return (
+    <>
+      <Header></Header>
+      <div className="card-container">
+        <Card></Card>
+      </div>
+      <Attribution></Attribution>
+    </>
+  );
 }
 
 const container = document.getElementById('react-root');

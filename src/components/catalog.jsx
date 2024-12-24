@@ -1,6 +1,8 @@
 import React from "react";
+import useWindowDimensions from "./../hooks/window_dimensions.jsx";
 
 function Catalog() {
+  const windowMedium = 768;
   const catalogImages = [
     require("./../../images/image-product-1.jpg"),
     require("./../../images/image-product-2.jpg"),
@@ -8,11 +10,16 @@ function Catalog() {
     require("./../../images/image-product-4.jpg"),
   ];
 
+  // React hook to get window dimensions
+  const { height, width } = useWindowDimensions();
+
   return (
     <>
       <div className="catalog">
         <Carousel images={catalogImages}></Carousel>
-        <Thumbnails images={catalogImages}></Thumbnails>
+        {width > windowMedium ? (
+          <Thumbnails images={catalogImages}></Thumbnails>
+        ) : null}
       </div>
     </>
   );
@@ -23,7 +30,7 @@ export default Catalog;
 function Carousel({ images }) {
   return (
     <>
-      <div className="carousel">
+      <div className="catalog--carousel">
         <CarouselButton direction="prev"></CarouselButton>
         <CarouselButton direction="next"></CarouselButton>
         <div className="carousel--img-container">
@@ -66,7 +73,7 @@ function CarouselButton({ direction }) {
 
 function Thumbnails({ images }) {
   return (
-    <div className="catalog--thumbnail-group">
+    <div className="catalog--thumbnail-group ">
       {images.map((image, index) => {
         return <Thumbnail key={index} image={image}></Thumbnail>;
       })}
@@ -75,5 +82,10 @@ function Thumbnails({ images }) {
 }
 
 function Thumbnail({ image }) {
-  return <img src={image} className="thumbnail-group--thumbnail hidden"></img>;
+  return (
+    <img
+      src={image}
+      className="thumbnail-group--thumbnail thumbnail__active"
+    ></img>
+  );
 }
