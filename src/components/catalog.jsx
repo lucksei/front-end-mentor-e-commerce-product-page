@@ -25,14 +25,19 @@ function Catalog() {
   );
 }
 
-export default Catalog;
-
 function Carousel({ images }) {
+  const windowMedium = 768;
+  const { height, width } = useWindowDimensions();
+
   return (
     <>
       <div className="catalog--carousel">
-        <CarouselButton direction="prev"></CarouselButton>
-        <CarouselButton direction="next"></CarouselButton>
+        {width < windowMedium ? (
+          <CarouselButton direction="prev"></CarouselButton>
+        ) : null}
+        {width < windowMedium ? (
+          <CarouselButton direction="next"></CarouselButton>
+        ) : null}
         <div className="carousel--img-container">
           {images.map((image, index) => {
             return <CarouselImage key={index} image={image}></CarouselImage>;
@@ -89,3 +94,5 @@ function Thumbnail({ image }) {
     ></img>
   );
 }
+
+export default Catalog;

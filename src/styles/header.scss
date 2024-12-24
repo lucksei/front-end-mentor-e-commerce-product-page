@@ -4,12 +4,28 @@
 // Header Styles
 
 .header {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: $white;
+  background-color: $light-grayish-blue;
   padding: 1rem 0.7rem 1rem 0.7rem;
+
+  @media (min-width: $screen-medium) {
+    padding: 2rem 4.5rem 2rem 4.5rem;
+
+    &::after {
+      position: absolute;
+      content: "";
+      display: block;
+      width: calc(100% - 9rem);
+      height: 1px;
+      top: 100%;
+      background-color: $grayish-blue;
+      margin: 0 auto;
+    }
+  }
 }
 
 .header--left {
