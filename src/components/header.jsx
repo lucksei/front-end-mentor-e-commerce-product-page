@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 
+/**
+ * A stateful functional component that renders the app header.
+ *
+ * The app header contains the company logo, a sidebar button, a cart button, and a profile button. The sidebar button toggles the state of the sidebar.
+ *
+ * The component's state is a boolean indicating whether the sidebar is currently open.
+ *
+ * @param {boolean} open - A boolean value indicating whether the sidebar should be open (true) or closed (false).
+ *
+ * @returns {ReactElement} The app header element.
+ */
 function Header() {
-  const headerTitle = "Sneakers";
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  /**
+   * Toggles the state of the sidebar.
+   *
+   * @param {boolean} open - A boolean value indicating whether the sidebar should be open (true) or closed (false).
+   */
+
+  const handleSidebarOpen = (open) => {
+    setSidebarOpen(open);
+  };
+
   return (
     <header className="header">
       <div className="header--left">
-        <Sidebar></Sidebar>
-        <SidebarButton></SidebarButton>
+        <Sidebar open={sidebarOpen} onSidebarOpen={handleSidebarOpen}></Sidebar>
+        <SidebarButton onSidebarOpen={handleSidebarOpen}></SidebarButton>
         <h1>
           <Logo></Logo>
         </h1>
@@ -19,8 +41,6 @@ function Header() {
   );
 }
 
-export default Header;
-
 function Logo() {
   return (
     <img
@@ -31,10 +51,14 @@ function Logo() {
   );
 }
 
-function Sidebar() {
+function Sidebar({ open, onSidebarOpen }) {
   return (
     <>
-      <div className="sidebar hidden">
+      <div
+        className={"sidebar--overlay" + " " + (open ? "overlay__active" : "")}
+      ></div>
+      <div className={"sidebar" + " " + (open ? "sidebar__active" : "")}>
+        <SidebarCloseButton onSidebarOpen={onSidebarOpen}></SidebarCloseButton>
         <ul>
           <li>Collections</li>
           <li>Men</li>
@@ -47,10 +71,24 @@ function Sidebar() {
   );
 }
 
-function SidebarButton() {
+function SidebarButton({ onSidebarOpen }) {
+  const handleClick = () => {
+    onSidebarOpen(true);
+  };
   return (
-    <button className="header--button">
+    <button className="header--button" onClick={handleClick}>
       <img src={require("./../../images/icon-menu.svg")} alt="menu"></img>
+    </button>
+  );
+}
+
+function SidebarCloseButton({ onSidebarOpen }) {
+  const handleClick = () => {
+    onSidebarOpen(false);
+  };
+  return (
+    <button type="button" className="sidebar--button" onClick={handleClick}>
+      <img src={require("./../../images/icon-close.svg")} alt="close"></img>
     </button>
   );
 }
@@ -70,3 +108,5 @@ function ProfileButton() {
     </button>
   );
 }
+
+export default Header;
