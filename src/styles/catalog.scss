@@ -20,9 +20,12 @@
   }
 }
 .carousel--img-container {
-  display: flex;
-  width: 100% * 4;
+  display: absolute;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 1fr);
+  grid-auto-flow: column;
   flex-direction: row;
+  width: calc(var(--img-count, 1) * 100%); // Controlled by JS
 }
 
 .carousel--img {

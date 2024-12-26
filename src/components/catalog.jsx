@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import useWindowDimensions from "./../hooks/window_dimensions.jsx";
 
 function Catalog() {
@@ -38,13 +38,27 @@ function Carousel({ images }) {
         {width < windowMedium ? (
           <CarouselButton direction="next"></CarouselButton>
         ) : null}
-        <div className="carousel--img-container">
-          {images.map((image, index) => {
-            return <CarouselImage key={index} image={image}></CarouselImage>;
-          })}
-        </div>
+        <CarouselImagesContainer images={images}></CarouselImagesContainer>
       </div>
     </>
+  );
+}
+
+function CarouselImagesContainer({ images }) {
+  const ref = useRef();
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const imgCount = images.length;
+    ref.current.style.setProperty("--img-count", imgCount);
+  });
+
+  return (
+    <div className="carousel--img-container" ref={ref}>
+      {images.map((image, index) => {
+        return <CarouselImage key={index} image={image}></CarouselImage>;
+      })}
+    </div>
   );
 }
 
