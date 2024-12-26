@@ -58,6 +58,7 @@ function Carousel({ images, currentImage, onImageSelect }) {
           <CarouselButton
             direction="next"
             currentImage={currentImage}
+            imageCount={images.length}
             onImageSelect={onImageSelect}
           ></CarouselButton>
         ) : null}
