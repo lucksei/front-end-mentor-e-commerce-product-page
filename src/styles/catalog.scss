@@ -19,18 +19,27 @@
     border-radius: 1.4rem;
   }
 }
+
+$gap-size: 3rem; // gap between images
 .carousel--img-container {
-  display: absolute;
+  position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fill, 1fr);
   grid-auto-flow: column;
-  flex-direction: row;
-  width: calc(var(--img-count, 1) * 100%); // Controlled by JS
+  width: calc(var(--img-count, 1) * (100% + $gap-size)); // Controlled by JS
+  gap: $gap-size;
+  transition: transform 0.5s ease-in-out;
+  transform: translateX(
+    calc(var(--current-img, 0) * ((-100% - $gap-size) / var(--img-count, 1)))
+  );
 }
 
 .carousel--img {
   width: 100%;
   height: auto;
+  @media (min-width: $screen-medium) {
+    border-radius: 1.4rem;
+  }
 }
 
 .carousel--button {
@@ -81,9 +90,11 @@
   height: auto;
   border: none;
   border-radius: 0.5rem;
+  cursor: pointer;
 }
 
 .thumbnail__active {
   border: 3px solid $orange;
   filter: opacity(0.5);
+  cursor: default;
 }

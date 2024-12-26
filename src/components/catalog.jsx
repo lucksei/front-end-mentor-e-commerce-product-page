@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useWindowDimensions from "./../hooks/window_dimensions.jsx";
 
 function Catalog() {
@@ -10,22 +10,36 @@ function Catalog() {
     require("./../../images/image-product-4.jpg"),
   ];
 
+  // React hook to set current image
+  const [currentImage, setCurrentImage] = useState(0);
+  const handleImageSelect = (index) => {
+    setCurrentImage(index);
+  };
+
   // React hook to get window dimensions
   const { height, width } = useWindowDimensions();
 
   return (
     <>
       <div className="catalog">
-        <Carousel images={catalogImages}></Carousel>
+        <Carousel
+          images={catalogImages}
+          currentImage={currentImage}
+          onImageSelect={handleImageSelect}
+        ></Carousel>
         {width > windowMedium ? (
-          <Thumbnails images={catalogImages}></Thumbnails>
+          <Thumbnails
+            images={catalogImages}
+            currentImage={currentImage}
+            onImageSelect={handleImageSelect}
+          ></Thumbnails>
         ) : null}
       </div>
     </>
   );
 }
 
-function Carousel({ images }) {
+function Carousel({ images, currentImage, onImageSelect }) {
   const windowMedium = 768;
   const { height, width } = useWindowDimensions();
 
@@ -33,28 +47,46 @@ function Carousel({ images }) {
     <>
       <div className="catalog--carousel">
         {width < windowMedium ? (
-          <CarouselButton direction="prev"></CarouselButton>
+          <CarouselButton
+            direction="prev"
+            currentImage={currentImage}
+            imageCount={images.length}
+            onImageSelect={onImageSelect}
+          ></CarouselButton>
         ) : null}
         {width < windowMedium ? (
-          <CarouselButton direction="next"></CarouselButton>
+          <CarouselButton
+            direction="next"
+            currentImage={currentImage}
+            onImageSelect={onImageSelect}
+          ></CarouselButton>
         ) : null}
-        <CarouselImagesContainer images={images}></CarouselImagesContainer>
+        <CarouselImagesContainer
+          images={images}
+          currentImage={currentImage}
+        ></CarouselImagesContainer>
       </div>
     </>
   );
 }
 
-function CarouselImagesContainer({ images }) {
-  const ref = useRef();
-
+function CarouselImagesContainer({ images, currentImage, onImageSelect }) {
+  // React hook to get image count and set css variable
+  const elementRef = useRef();
   useEffect(() => {
-    if (!ref.current) return;
+    if (!elementRef.current) return;
     const imgCount = images.length;
-    ref.current.style.setProperty("--img-count", imgCount);
+    elementRef.current.style.setProperty("--img-count", imgCount);
+  });
+
+  // React hook to set position for displaying the current image
+  useEffect(() => {
+    if (!elementRef.current) return;
+    elementRef.current.style.setProperty("--current-img", currentImage);
   });
 
   return (
-    <div className="carousel--img-container" ref={ref}>
+    <div className="carousel--img-container" ref={elementRef}>
       {images.map((image, index) => {
         return <CarouselImage key={index} image={image}></CarouselImage>;
       })}
@@ -66,7 +98,12 @@ function CarouselImage({ image }) {
   return <img src={image} className="carousel--img"></img>;
 }
 
-function CarouselButton({ direction }) {
+function CarouselButton({
+  direction,
+  currentImage,
+  imageCount,
+  onImageSelect,
+}) {
   let flagPrev, flagNext;
   let imageIcon;
 
@@ -80,31 +117,69 @@ function CarouselButton({ direction }) {
     imageIcon = require("./../../images/icon-next.svg");
   }
 
+  // React hook to set position for displaying the current image
+  const handleClick = () => {
+    if (flagPrev && currentImage > 0) {
+      onImageSelect(currentImage - 1);
+    } else if (flagNext && currentImage < imageCount - 1) {
+      onImageSelect(currentImage + 1);
+    }
+  };
+
   return (
     <button
       type="button"
-      className={"carousel--button " + (flagPrev ? "left" : "right")}
+      className={
+        "carousel--button" +
+        " " +
+        (flagPrev ? "left" : "right") +
+        " " +
+        (flagPrev && currentImage === 0 ? "hidden" : "") +
+        " " +
+        (flagNext && currentImage === imageCount - 1 ? "hidden" : "")
+      }
+      onClick={handleClick}
     >
       <img src={imageIcon} alt={flagPrev ? "prev" : "next"} />
     </button>
   );
 }
 
-function Thumbnails({ images }) {
+function Thumbnails({ images, currentImage, onImageSelect }) {
   return (
     <div className="catalog--thumbnail-group ">
       {images.map((image, index) => {
-        return <Thumbnail key={index} image={image}></Thumbnail>;
+        return (
+          <Thumbnail
+            key={index}
+            image={image}
+            imageIndex={index}
+            onImageSelect={onImageSelect}
+            isActive={index === currentImage ? true : false}
+          ></Thumbnail>
+        );
       })}
     </div>
   );
 }
 
-function Thumbnail({ image }) {
+function Thumbnail({ image, imageIndex, onImageSelect, isActive }) {
+  const imageRef = useRef(null);
+  // React hook to set position for displaying the current image
+  const handleClick = () => {
+    onImageSelect(imageIndex);
+  };
+
   return (
     <img
       src={image}
-      className="thumbnail-group--thumbnail thumbnail__active"
+      className={
+        "thumbnail-group--thumbnail" +
+        " " +
+        (isActive ? "thumbnail__active" : "")
+      }
+      ref={imageRef}
+      onClick={handleClick}
     ></img>
   );
 }
