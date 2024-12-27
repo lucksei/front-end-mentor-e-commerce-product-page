@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 /**
  * A stateful functional component that renders the app header.
@@ -52,12 +52,23 @@ function Logo() {
 }
 
 function Sidebar({ open, onSidebarOpen }) {
+  const sidebarRef = useRef();
+  const overlayRef = useRef();
+
+  useEffect(() => {
+    if (open) {
+      sidebarRef.current.classList.add("sidebar__active");
+      overlayRef.current.classList.add("overlay__active");
+    } else {
+      sidebarRef.current.classList.remove("sidebar__active");
+      overlayRef.current.classList.remove("overlay__active");
+    }
+  });
+
   return (
     <>
-      <div
-        className={"sidebar--overlay" + " " + (open ? "overlay__active" : "")}
-      ></div>
-      <div className={"sidebar" + " " + (open ? "sidebar__active" : "")}>
+      <div className={"sidebar--overlay"} ref={overlayRef}></div>
+      <div className={"sidebar"} ref={sidebarRef}>
         <SidebarCloseButton onSidebarOpen={onSidebarOpen}></SidebarCloseButton>
         <ul>
           <li>Collections</li>
@@ -76,7 +87,10 @@ function SidebarButton({ onSidebarOpen }) {
     onSidebarOpen(true);
   };
   return (
-    <button className="header--button" onClick={handleClick}>
+    <button
+      className="header--button header--sidebar-button"
+      onClick={handleClick}
+    >
       <img src={require("./../../images/icon-menu.svg")} alt="menu"></img>
     </button>
   );

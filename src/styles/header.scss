@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "./style_guide.scss" as *;
 @use "./utility.scss" as *;
 
@@ -32,6 +33,12 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  @media (min-width: $screen-medium) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 1fr);
+    grid-template-rows: auto;
+  }
 }
 
 .header--right {
@@ -45,10 +52,21 @@
   align-items: center;
   margin: 0.5rem;
   padding: 0;
+
+  @media (min-width: $screen-medium) {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
 }
 
 .header--button {
   @include icon-button(1.6rem, 1.6rem);
+
+  @media (min-width: $screen-medium) {
+    &.header--sidebar-button {
+      display: none !important;
+    }
+  }
 }
 
 .header--profile {
@@ -59,28 +77,69 @@
 
 .sidebar {
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
   display: flex;
-  width: 55%;
   height: 100vh;
   flex-direction: column;
   background-color: $white;
   z-index: 999;
-  transition: transform 0.3s ease-in-out;
   transform: translateX(-100%);
 
   &.sidebar__active {
+    transition: transform 0.3s ease-in-out;
     transform: translateX(0);
   }
 
+  &.sidebar__deactivate {
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%);
+  }
+
   .sidebar--button {
-    @include icon-button(1.2rem, 1.2rem);
-    margin: 1rem 1rem 4rem 1rem;
+    @include icon-button(1.3rem, 1.3rem);
+    margin: 1rem 1rem 1rem 1rem;
   }
 
   ul {
     list-style-type: none;
+    margin: 1.4rem 7.1rem 0 0;
+
+    li {
+      font-size: 1.2rem;
+      font-weight: map.get($weights, "bold");
+      cursor: pointer;
+      margin: 0 0 1.1rem 1rem;
+    }
+  }
+
+  @media (min-width: $screen-medium) {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    position: relative;
+    transition: none;
+    transform: translateX(0);
+    background: none;
+    width: min-content;
+    height: min-content;
+
+    .sidebar--button {
+      display: none;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      margin: 0 0 0 1.8rem;
+
+      li {
+        font-size: 0.9rem;
+        font-weight: map.get($weights, "regular");
+        color: $grayish-blue;
+        margin: 0 1rem 0 0;
+      }
+    }
   }
 }
 
@@ -100,5 +159,9 @@
     visibility: visible;
     transition: opacity 0.3s ease-in-out;
     opacity: 0.6;
+  }
+
+  @media (min-width: $screen-medium) {
+    display: none;
   }
 }
