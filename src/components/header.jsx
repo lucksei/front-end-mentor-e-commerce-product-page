@@ -41,6 +41,13 @@ function Header() {
   );
 }
 
+/**
+ * A stateless functional component that renders the company logo.
+ *
+ * The component does not accept any props.
+ *
+ * @returns {ReactElement} The company logo element.
+ */
 function Logo() {
   return (
     <img
@@ -51,6 +58,17 @@ function Logo() {
   );
 }
 
+/**
+ * A stateful functional component that renders the sidebar.
+ *
+ * The component's state is a boolean indicating whether the sidebar is currently open,
+ * and a function to toggle the state of the sidebar.
+ *
+ * @param {boolean} open - A boolean value indicating whether the sidebar should be open (true) or closed (false).
+ * @param {function} onSidebarOpen - A function to toggle the state of the sidebar.
+ *
+ * @returns {ReactElement} The sidebar element.
+ */
 function Sidebar({ open, onSidebarOpen }) {
   const sidebarRef = useRef();
   const overlayRef = useRef();
@@ -82,6 +100,12 @@ function Sidebar({ open, onSidebarOpen }) {
   );
 }
 
+/**
+ * A stateless functional component that renders the sidebar button.
+ *
+ * @param {function} onsidebarOpen - A function to toggle the state of the sidebar.
+ * @returns {ReactElement} The sidebar button element.
+ */
 function SidebarButton({ onSidebarOpen }) {
   const handleClick = () => {
     onSidebarOpen(true);
@@ -96,6 +120,12 @@ function SidebarButton({ onSidebarOpen }) {
   );
 }
 
+/**
+ * A stateless functional component that renders the close button for the sidebar.
+ *
+ * @param {function} onSidebarOpen - A function to toggle the state of the sidebar.
+ * @returns {ReactElement} The close button element.
+ */
 function SidebarCloseButton({ onSidebarOpen }) {
   const handleClick = () => {
     onSidebarOpen(false);
@@ -107,6 +137,11 @@ function SidebarCloseButton({ onSidebarOpen }) {
   );
 }
 
+/**
+ * A stateless functional component that renders the cart button.
+ *
+ * @returns {ReactElement} The cart button element.
+ */
 function CartButton() {
   return (
     <button className="header--button">
@@ -115,6 +150,11 @@ function CartButton() {
   );
 }
 
+/**
+ * A stateless functional component that renders the profile button.
+ *
+ * @returns {ReactElement} The profile button element.
+ */
 function ProfileButton() {
   return (
     <button className="header--button header--profile">
