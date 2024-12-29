@@ -50,12 +50,8 @@ function Header() {
  */
 function Logo() {
   return (
-    <button type="button">
-      <img
-        src={require("./../../images/logo.svg")}
-        alt="logo"
-        className="header--logo"
-      ></img>
+    <button type="button" className="header--logo">
+      <img src={require("./../../images/logo.svg")} alt="logo"></img>
     </button>
   );
 }

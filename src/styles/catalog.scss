@@ -44,7 +44,7 @@ $gap-size: 3rem; // gap between images
 
 .carousel--button {
   position: absolute;
-  @include icon-button(2.8rem, 2.8rem);
+  @include generic-button(2.8rem, 2.8rem);
   background-color: $light-grayish-blue;
   display: flex;
   justify-content: center;
@@ -57,12 +57,14 @@ $gap-size: 3rem; // gap between images
     width: 35%;
     height: 50%;
   }
+
   &.left {
     left: 1rem;
     img {
       margin-left: -2px;
     }
   }
+
   &.right {
     right: 1rem;
     img {
@@ -86,9 +88,9 @@ $gap-size: 3rem; // gap between images
 }
 
 .thumbnail-group--thumbnail {
-  width: 100%;
-  height: auto;
-  cursor: pointer;
+  @include icon-button(auto, 100%);
+  padding: 0;
+  margin: 0;
 
   img {
     width: 100%;

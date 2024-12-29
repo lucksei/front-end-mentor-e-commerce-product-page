@@ -48,14 +48,11 @@
 }
 
 .header--logo {
+  @include generic-button(auto, auto);
   display: flex;
   align-items: center;
   margin: 0.5rem;
   padding: 0;
-
-  &:hover {
-    cursor: pointer;
-  }
 
   @media (min-width: $screen-medium) {
     grid-column: 1 / 2;
@@ -142,16 +139,21 @@
         font-weight: map.get($weights, "regular");
         color: $grayish-blue;
         margin: 0 1rem 0 0;
-      }
 
-      li:hover {
         &::after {
           content: "";
           display: block;
+          visibility: hidden;
           width: 100%;
           height: 2px;
           top: 100%;
           background-color: $orange;
+        }
+      }
+
+      li:hover {
+        &::after {
+          visibility: visible;
         }
       }
     }

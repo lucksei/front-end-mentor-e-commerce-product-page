@@ -2,13 +2,13 @@
   display: none !important;
 }
 
-@mixin button($h, $w) {
+@mixin generic-button($w, $h) {
   background: none;
   border: none;
   padding: 0.25rem;
   margin: 0 0.5rem;
-  height: $h;
   width: $w;
+  height: $h;
   z-index: 50;
   cursor: pointer;
 
@@ -19,15 +19,15 @@
 }
 
 @mixin icon-button($h, $w) {
-  @include button($h, $w);
+  @include generic-button($h, $w);
   &:hover {
     opacity: 0.5;
   }
 }
 
-button {
-  background: none;
-  border: none;
-  margin: 0;
-  padding: 0;
-}
+// button {
+//   background: none;
+//   border: none;
+//   margin: 0;
+//   padding: 0;
+// }
