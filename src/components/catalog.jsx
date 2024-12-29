@@ -172,8 +172,9 @@ function Thumbnail({ image, imageIndex, onImageSelect, isActive }) {
   };
 
   return (
-    <img
-      src={image}
+    <button
+      type="button"
+      disabled={isActive}
       className={
         "thumbnail-group--thumbnail" +
         " " +
@@ -181,7 +182,9 @@ function Thumbnail({ image, imageIndex, onImageSelect, isActive }) {
       }
       ref={imageRef}
       onClick={handleClick}
-    ></img>
+    >
+      <img src={image}></img>
+    </button>
   );
 }
 

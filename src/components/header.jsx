@@ -50,11 +50,13 @@ function Header() {
  */
 function Logo() {
   return (
-    <img
-      src={require("./../../images/logo.svg")}
-      alt="logo"
-      className="header--logo"
-    ></img>
+    <button type="button">
+      <img
+        src={require("./../../images/logo.svg")}
+        alt="logo"
+        className="header--logo"
+      ></img>
+    </button>
   );
 }
 
@@ -144,7 +146,7 @@ function SidebarCloseButton({ onSidebarOpen }) {
  */
 function CartButton() {
   return (
-    <button className="header--button">
+    <button role="button" className="header--button">
       <img src={require("./../../images/icon-cart.svg")} alt="cart"></img>
     </button>
   );

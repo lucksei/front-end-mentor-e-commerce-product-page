@@ -51,7 +51,7 @@ $gap-size: 3rem; // gap between images
   align-items: center;
   border-radius: 50%;
   top: 50%;
-  z-index: 1;
+  z-index: 50;
 
   img {
     width: 35%;
@@ -88,13 +88,26 @@ $gap-size: 3rem; // gap between images
 .thumbnail-group--thumbnail {
   width: 100%;
   height: auto;
-  border: none;
-  border-radius: 0.5rem;
   cursor: pointer;
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+  }
+
+  &:hover {
+    img {
+      filter: opacity(0.5);
+    }
+  }
 }
 
 .thumbnail__active {
-  border: 3px solid $orange;
-  filter: opacity(0.5);
   cursor: default;
+
+  img {
+    filter: opacity(0.5);
+    border: 3px solid $orange;
+  }
 }
