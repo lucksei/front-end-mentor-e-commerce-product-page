@@ -53,21 +53,27 @@ $gap-size: 3rem; // gap between images
   top: 50%;
   z-index: 50;
 
-  img {
-    width: 35%;
-    height: 50%;
+  svg {
+    transition: stroke 0.1s ease-in-out;
+    stroke: $very-dark-blue;
   }
 
+  &:hover {
+    svg {
+      transition: stroke 0.1s ease-in-out;
+      stroke: $orange;
+    }
+  }
   &.left {
     left: 1rem;
-    img {
+    svg {
       margin-left: -2px;
     }
   }
 
   &.right {
     right: 1rem;
-    img {
+    svg {
       margin-left: 2px;
     }
   }

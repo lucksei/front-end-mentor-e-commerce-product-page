@@ -107,15 +107,44 @@ function CarouselButton({
 }) {
   let flagPrev, flagNext;
   let imageIcon;
+  const svgPrev = (
+    <>
+      <svg width="12" height="18" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M11 1 3 9l8 8"
+          stroke-width="3"
+          fill="none"
+          fill-rule="evenodd"
+        />
+      </svg>
+    </>
+  );
+
+  const svgNext = (
+    <>
+      <svg width="13" height="18" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="m2 1 8 8-8 8"
+          strokeWidth="3"
+          fill="none"
+          fill-rule="evenodd"
+        />
+      </svg>
+    </>
+  );
+
+  // React hook to change the svg icon to orange when hovering or clicking
+  const buttonRef = useRef();
+  useEffect(() => {
+    console.log(buttonRef.current);
+  });
 
   if (direction === "prev") {
     flagPrev = true;
     flagNext = false;
-    imageIcon = require("./../../images/icon-previous.svg");
   } else if (direction == "next") {
     flagPrev = false;
     flagNext = true;
-    imageIcon = require("./../../images/icon-next.svg");
   }
 
   // React hook to set position for displaying the current image
@@ -139,9 +168,10 @@ function CarouselButton({
         " " +
         (flagNext && currentImage === imageCount - 1 ? "hidden" : "")
       }
+      ref={buttonRef}
       onClick={handleClick}
     >
-      <img src={imageIcon} alt={flagPrev ? "prev" : "next"} />
+      {direction === "prev" ? svgPrev : svgNext}
     </button>
   );
 }
