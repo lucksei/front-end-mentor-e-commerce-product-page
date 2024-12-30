@@ -184,17 +184,16 @@
     box-shadow: inset 0 0 0 2px $orange;
   }
 
-  @media (min-width: $screen-medium) {
-    grid-column: 2 / 3;
-    max-height: min-content;
-  }
-
   span {
     margin-right: 0.8rem;
   }
 
-  img {
-    transform: scale(0.8);
-    filter: brightness(0);
+  svg {
+    fill: $black;
+  }
+
+  @media (min-width: $screen-medium) {
+    grid-column: 2 / 3;
+    max-height: min-content;
   }
 }

@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import useWindowDimensions from "./../hooks/window_dimensions.jsx";
 
+/**
+ * Catalog component
+ *
+ * @returns {ReactElement} The catalog element.
+ */
 function Catalog() {
   const windowMedium = 768;
   const catalogImages = [
@@ -28,17 +33,32 @@ function Catalog() {
           onImageSelect={handleImageSelect}
         ></Carousel>
         {width > windowMedium ? (
-          <Thumbnails
-            images={catalogImages}
-            currentImage={currentImage}
-            onImageSelect={handleImageSelect}
-          ></Thumbnails>
+          <>
+            <Thumbnails
+              images={catalogImages}
+              currentImage={currentImage}
+              onImageSelect={handleImageSelect}
+            ></Thumbnails>
+            <Lightbox
+              images={catalogImages}
+              currentImage={currentImage}
+              onImageSelect={handleImageSelect}
+            ></Lightbox>
+          </>
         ) : null}
       </div>
     </>
   );
 }
 
+/**
+ * Carousel component
+ *
+ * @param {Array} images - An array of image urls
+ * @param {Number} currentImage - The index of the current image
+ * @param {Function} onImageSelect - A function to set the current image
+ * @returns
+ */
 function Carousel({ images, currentImage, onImageSelect }) {
   const windowMedium = 768;
   const { height, width } = useWindowDimensions();
@@ -71,6 +91,14 @@ function Carousel({ images, currentImage, onImageSelect }) {
   );
 }
 
+/**
+ * CarouselImagesContainer component
+ *
+ * @param {Array} images - An array of image urls
+ * @param {Number} currentImage - The index of the current image
+ * @param {Function} onImageSelect - A function to set the current image
+ * @returns
+ */
 function CarouselImagesContainer({ images, currentImage, onImageSelect }) {
   // React hook to get image count and set css variable
   const elementRef = useRef();
@@ -95,26 +123,40 @@ function CarouselImagesContainer({ images, currentImage, onImageSelect }) {
   );
 }
 
+/**
+ * CarouselImage component
+ *
+ * @param {String} image - An image url
+ * @returns
+ */
 function CarouselImage({ image }) {
   return <img src={image} className="carousel--img"></img>;
 }
 
+/**
+ * CarouselButton component
+ *
+ * @param {String} direction - The direction of the button
+ * @param {Number} currentImage - The index of the current image
+ * @param {Number} imageCount - The total number of images
+ * @param {Function} onImageSelect - A function to set the current image
+ * @returns
+ */
 function CarouselButton({
   direction,
   currentImage,
   imageCount,
   onImageSelect,
 }) {
-  let flagPrev, flagNext;
-  let imageIcon;
+  // SVG icons
   const svgPrev = (
     <>
       <svg width="12" height="18" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M11 1 3 9l8 8"
-          stroke-width="3"
+          strokeWidth="3"
           fill="none"
-          fill-rule="evenodd"
+          fillRule="evenodd"
         />
       </svg>
     </>
@@ -123,22 +165,13 @@ function CarouselButton({
   const svgNext = (
     <>
       <svg width="13" height="18" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="m2 1 8 8-8 8"
-          strokeWidth="3"
-          fill="none"
-          fill-rule="evenodd"
-        />
+        <path d="m2 1 8 8-8 8" strokeWidth="3" fill="none" fillRule="evenodd" />
       </svg>
     </>
   );
 
-  // React hook to change the svg icon to orange when hovering or clicking
-  const buttonRef = useRef();
-  useEffect(() => {
-    console.log(buttonRef.current);
-  });
-
+  // Setting up flags for direction
+  let flagPrev, flagNext;
   if (direction === "prev") {
     flagPrev = true;
     flagNext = false;
@@ -168,7 +201,6 @@ function CarouselButton({
         " " +
         (flagNext && currentImage === imageCount - 1 ? "hidden" : "")
       }
-      ref={buttonRef}
       onClick={handleClick}
     >
       {direction === "prev" ? svgPrev : svgNext}
@@ -176,6 +208,14 @@ function CarouselButton({
   );
 }
 
+/**
+ * Thumbnails component
+ *
+ * @param {Array} images - An array of image urls
+ * @param {Number} currentImage - The index of the current image
+ * @param {Function} onImageSelect - A function to set the current image
+ * @returns
+ */
 function Thumbnails({ images, currentImage, onImageSelect }) {
   return (
     <div className="catalog--thumbnail-group ">
@@ -194,6 +234,15 @@ function Thumbnails({ images, currentImage, onImageSelect }) {
   );
 }
 
+/**
+ * Thumbnail component
+ *
+ * @param {String} image - An image url
+ * @param {Number} imageIndex - The index of the image
+ * @param {Function} onImageSelect - A function to set the current image
+ * @param {Boolean} isActive - Whether the thumbnail is active or not
+ * @returns
+ */
 function Thumbnail({ image, imageIndex, onImageSelect, isActive }) {
   const imageRef = useRef(null);
   // React hook to set position for displaying the current image
@@ -218,4 +267,62 @@ function Thumbnail({ image, imageIndex, onImageSelect, isActive }) {
   );
 }
 
-export default Catalog;
+/**
+ * Lightbox component
+ *
+ * @param {Array} images - An array of image urls
+ * @param {Number} currentImage - The index of the current image
+ * @param {Function} onImageSelect - A function to set the current image
+ * @returns
+ */
+function Lightbox({ images, currentImage, onImageSelect }) {
+  const iconClose = (
+    <>
+      <svg width="14" height="15" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="m11.596.782 2.122 2.122L9.12 7.499l4.597 4.597-2.122 2.122L7 9.62l-4.595 4.597-2.122-2.122L4.878 7.5.282 2.904 2.404.782l4.595 4.596L11.596.782Z"
+          // fill="#69707D"
+          fillRule="evenodd"
+        />
+      </svg>
+    </>
+  );
+
+  return (
+    <div className="lightbox-modal">
+      <div className="lightbox--overlay overlay__active"></div>
+      <div className="lightbox-container">
+        <button type="button" className="lightbox--close">
+          {iconClose}
+        </button>
+        <div className="catalog--carousel lightbox">
+          <CarouselButton
+            direction="prev"
+            currentImage={currentImage}
+            imageCount={images.length}
+            onImageSelect={onImageSelect}
+          ></CarouselButton>
+          <CarouselButton
+            direction="next"
+            currentImage={currentImage}
+            imageCount={images.length}
+            onImageSelect={onImageSelect}
+          ></CarouselButton>
+          <div className="lightbox--images-mask">
+            <CarouselImagesContainer
+              images={images}
+              currentImage={currentImage}
+            ></CarouselImagesContainer>
+          </div>
+        </div>
+        <Thumbnails
+          images={images}
+          currentImage={currentImage}
+          onImageSelect={onImageSelect}
+        ></Thumbnails>
+      </div>
+    </div>
+  );
+}
+
+export default Catalog; // Export the Catalog component

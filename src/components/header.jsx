@@ -73,11 +73,18 @@ function Sidebar({ open, onSidebarOpen }) {
 
   useEffect(() => {
     if (open) {
+      sidebarRef.current.classList.remove("sidebar__deactivate");
       sidebarRef.current.classList.add("sidebar__active");
       overlayRef.current.classList.add("overlay__active");
     } else {
       sidebarRef.current.classList.remove("sidebar__active");
       overlayRef.current.classList.remove("overlay__active");
+
+      // Add a 0.5 second delay before removing the class
+      sidebarRef.current.classList.add("sidebar__deactivate");
+      setTimeout(() => {
+        sidebarRef.current.classList.remove("sidebar__deactivate");
+      }, 500);
     }
   });
 
