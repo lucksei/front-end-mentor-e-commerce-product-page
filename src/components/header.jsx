@@ -88,9 +88,17 @@ function Sidebar({ open, onSidebarOpen }) {
     }
   });
 
+  const handleClick = () => {
+    onSidebarOpen(false);
+  };
+
   return (
     <>
-      <div className={"sidebar--overlay"} ref={overlayRef}></div>
+      <div
+        className={"sidebar--overlay"}
+        ref={overlayRef}
+        onClick={handleClick}
+      ></div>
       <div className={"sidebar"} ref={sidebarRef}>
         <SidebarCloseButton onSidebarOpen={onSidebarOpen}></SidebarCloseButton>
         <ul>
