@@ -24,7 +24,7 @@ function Catalog() {
   // React hook to get window dimensions
   const { height, width } = useWindowDimensions();
 
-  let [lightboxOpen, setLightboxopen] = useState(true);
+  let [lightboxOpen, setLightboxopen] = useState(false);
 
   const handleLightboxOpen = (open) => {
     setLightboxopen(open);
@@ -75,7 +75,7 @@ function Carousel({ images, currentImage, onImageSelect, onLightboxOpen }) {
   const { height, width } = useWindowDimensions();
 
   function handleClick() {
-    onLightboxOpen(true);
+    if (width > windowMedium) onLightboxOpen(true);
   }
 
   return (
@@ -315,7 +315,10 @@ function Lightbox({
 
   return (
     <div className="lightbox-modal">
-      <div className="lightbox--overlay overlay__active"></div>
+      <div
+        className="lightbox--overlay overlay__active"
+        onClick={handleClick}
+      ></div>
       <div className="lightbox-container">
         <button type="button" className="lightbox--close" onClick={handleClick}>
           {iconClose}
