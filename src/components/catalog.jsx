@@ -24,6 +24,12 @@ function Catalog() {
   // React hook to get window dimensions
   const { height, width } = useWindowDimensions();
 
+  let [lightboxOpen, setLightboxopen] = useState(true);
+
+  const handleLightboxOpen = (open) => {
+    setLightboxopen(open);
+  };
+
   return (
     <>
       <div className="catalog">
@@ -31,6 +37,7 @@ function Catalog() {
           images={catalogImages}
           currentImage={currentImage}
           onImageSelect={handleImageSelect}
+          onLightboxOpen={handleLightboxOpen}
         ></Carousel>
         {width > windowMedium ? (
           <>
@@ -39,12 +46,16 @@ function Catalog() {
               currentImage={currentImage}
               onImageSelect={handleImageSelect}
             ></Thumbnails>
-            <Lightbox
-              images={catalogImages}
-              currentImage={currentImage}
-              onImageSelect={handleImageSelect}
-            ></Lightbox>
           </>
+        ) : null}
+        {width > windowMedium && lightboxOpen ? (
+          <Lightbox
+            images={catalogImages}
+            currentImage={currentImage}
+            onImageSelect={handleImageSelect}
+            open={lightboxOpen}
+            onLightboxOpen={handleLightboxOpen}
+          ></Lightbox>
         ) : null}
       </div>
     </>
@@ -59,13 +70,17 @@ function Catalog() {
  * @param {Function} onImageSelect - A function to set the current image
  * @returns
  */
-function Carousel({ images, currentImage, onImageSelect }) {
+function Carousel({ images, currentImage, onImageSelect, onLightboxOpen }) {
   const windowMedium = 768;
   const { height, width } = useWindowDimensions();
 
+  function handleClick() {
+    onLightboxOpen(true);
+  }
+
   return (
     <>
-      <div className="catalog--carousel">
+      <div className="catalog--carousel" role="button" onClick={handleClick}>
         {width < windowMedium ? (
           <CarouselButton
             direction="prev"
@@ -275,7 +290,13 @@ function Thumbnail({ image, imageIndex, onImageSelect, isActive }) {
  * @param {Function} onImageSelect - A function to set the current image
  * @returns
  */
-function Lightbox({ images, currentImage, onImageSelect }) {
+function Lightbox({
+  images,
+  currentImage,
+  onImageSelect,
+  open,
+  onLightboxOpen,
+}) {
   const iconClose = (
     <>
       <svg width="14" height="15" xmlns="http://www.w3.org/2000/svg">
@@ -288,11 +309,15 @@ function Lightbox({ images, currentImage, onImageSelect }) {
     </>
   );
 
+  function handleClick() {
+    onLightboxOpen(false);
+  }
+
   return (
     <div className="lightbox-modal">
       <div className="lightbox--overlay overlay__active"></div>
       <div className="lightbox-container">
-        <button type="button" className="lightbox--close">
+        <button type="button" className="lightbox--close" onClick={handleClick}>
           {iconClose}
         </button>
         <div className="catalog--carousel lightbox">

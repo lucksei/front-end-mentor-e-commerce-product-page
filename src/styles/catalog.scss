@@ -17,6 +17,7 @@
 
   @media (min-width: $screen-medium) {
     border-radius: 1.4rem;
+    cursor: pointer;
   }
 
   $gap-size: 3rem; // gap between images
@@ -147,6 +148,7 @@
       top: 0;
       left: 0;
       max-width: max-content;
+      cursor: default;
 
       .lightbox--images-mask {
         overflow-x: hidden;
