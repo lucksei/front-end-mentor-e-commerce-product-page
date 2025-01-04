@@ -84,6 +84,23 @@
   }
 }
 
+.header--cart-button {
+  position: relative;
+  @include icon-button(1.6rem, 1.6rem);
+
+  .cart-button--badge {
+    position: absolute;
+    top: -0.2rem;
+    right: -0.6rem;
+    background-color: $orange;
+    border-radius: 40%;
+    min-width: 1.4rem;
+    color: $white;
+    text-align: center;
+    font-weight: map.get($weights, "regular");
+  }
+}
+
 // Sidebar Styles
 
 .sidebar {
