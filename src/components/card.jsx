@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Catalog from "./catalog.jsx";
 
@@ -51,15 +51,29 @@ function CardPrice() {
 }
 
 function CardQuantity() {
+  let [quantity, setQuantity] = useState(0);
+
+  function incrementQuantity() {
+    if (quantity <= 99) {
+      setQuantity(quantity + 1);
+    }
+  }
+
+  function decrementQuantity() {
+    if (quantity > 0) {
+      setQuantity(quantity - 1);
+    }
+  }
+
   return (
     <div className="card-body--quantity">
-      <button className="quantity--button-minus">
+      <button className="quantity--button-minus" onClick={decrementQuantity}>
         <img src={require("./../../images/icon-minus.svg")} alt="minus"></img>
       </button>
       <div className="quantity--value">
-        <span>0</span>
+        <span>{quantity}</span>
       </div>
-      <button className="quantity--button-plus">
+      <button className="quantity--button-plus" onClick={incrementQuantity}>
         <img src={require("./../../images/icon-plus.svg")} alt="plus"></img>
       </button>
     </div>
