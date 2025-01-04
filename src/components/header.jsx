@@ -170,7 +170,7 @@ function CartButton() {
  */
 function ProfileButton() {
   return (
-    <button className="header--button header--profile">
+    <button className="header--profile">
       <img src={require("./../../images/image-avatar.png")} alt="profile"></img>
     </button>
   );

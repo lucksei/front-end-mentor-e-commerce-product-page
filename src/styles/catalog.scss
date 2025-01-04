@@ -51,6 +51,7 @@
     align-items: center;
     border-radius: 50%;
     top: calc(50% - 1.4rem);
+    z-index: 1100;
 
     svg {
       transition: stroke 0.1s ease-in-out;
@@ -155,8 +156,6 @@
       }
 
       .carousel--button {
-        z-index: 1100;
-
         &.left {
           left: -1.8rem;
         }
