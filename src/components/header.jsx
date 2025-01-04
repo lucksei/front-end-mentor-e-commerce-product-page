@@ -34,7 +34,7 @@ function Header() {
         </h1>
       </div>
       <div className="header--right">
-        <CartButton quantity={0}></CartButton>
+        <CartButton quantity={3}></CartButton>
         <ProfileButton></ProfileButton>
       </div>
     </header>

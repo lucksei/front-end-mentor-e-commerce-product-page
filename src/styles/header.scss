@@ -95,8 +95,11 @@
     background-color: $orange;
     border-radius: 40%;
     min-width: 1.4rem;
+    min-height: 0.8rem;
     color: $white;
     text-align: center;
+    vertical-align: baseline;
+    font-size: 0.7rem;
     font-weight: map.get($weights, "regular");
   }
 }
