@@ -11,7 +11,7 @@
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  background-color: $light-grayish-blue;
+  background-color: $white;
   min-height: 100vh;
 }
 
@@ -146,7 +146,7 @@
   button {
     cursor: pointer;
     &:active {
-      svg {
+      img {
         filter: opacity(0.5);
       }
     }

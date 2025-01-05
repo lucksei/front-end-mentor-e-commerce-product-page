@@ -51,19 +51,20 @@ function CardPrice() {
 }
 
 function CardQuantity() {
+  // React hook to set the quantity
   let [quantity, setQuantity] = useState(0);
 
-  function incrementQuantity() {
+  const incrementQuantity = () => {
     if (quantity <= 99) {
       setQuantity(quantity + 1);
     }
-  }
+  };
 
-  function decrementQuantity() {
+  const decrementQuantity = () => {
     if (quantity > 0) {
       setQuantity(quantity - 1);
     }
-  }
+  };
 
   return (
     <div className="card-body--quantity">

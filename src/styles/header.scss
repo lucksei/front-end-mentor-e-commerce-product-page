@@ -10,7 +10,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: $light-grayish-blue;
+  background-color: $white;
   padding: 1rem 0.7rem 1rem 0.7rem;
 
   @media (min-width: $screen-medium) {
@@ -88,14 +88,15 @@
   position: relative;
   @include icon-button(1.6rem, 1.6rem);
 
+  $min-height: 0.8rem;
   .cart-button--badge {
     position: absolute;
     top: -0.2rem;
     right: -0.6rem;
     background-color: $orange;
-    border-radius: 40%;
+    border-radius: calc($min-height / 2);
     min-width: 1.4rem;
-    min-height: 0.8rem;
+    min-height: $min-height;
     color: $white;
     text-align: center;
     vertical-align: baseline;
@@ -198,3 +199,5 @@
     display: none;
   }
 }
+
+// Cart Modal Styles
