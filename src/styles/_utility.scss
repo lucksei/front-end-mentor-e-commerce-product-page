@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "./style_guide.scss" as *;
 
 .hidden {
@@ -43,5 +44,32 @@
     visibility: visible;
     transition: opacity 0.3s ease-in-out;
     opacity: 0.6;
+  }
+}
+
+@mixin orange-button {
+  @include generic-button(100%, 2.8rem);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.4rem;
+  background-color: $orange;
+  color: $black;
+  font-weight: map.get($weights, "bold");
+  font-size: 0.8rem;
+  margin: 1rem 0 0 0;
+  padding: 0.8rem 1.9rem 0.8rem 1.9rem;
+  white-space: nowrap;
+  height: 2.8rem;
+
+  &:active {
+    filter: opacity(0.7);
+  }
+
+  svg {
+    fill: $black;
+    margin-right: 0.8rem;
+    transform: scale(0.8);
   }
 }

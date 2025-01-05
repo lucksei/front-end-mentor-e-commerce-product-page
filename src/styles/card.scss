@@ -173,33 +173,7 @@
 }
 
 .card-body--cart {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-radius: 0.4rem;
-  background-color: $orange;
-  color: $black;
-  font-weight: map.get($weights, "bold");
-  font-size: 0.8rem;
-  margin: 1rem 0 0 0;
-  padding: 0.8rem 1.9rem 0.8rem 1.9rem;
-  white-space: nowrap;
-  height: 2.8rem;
-  cursor: pointer;
-
-  &:active {
-    filter: opacity(0.7);
-  }
-
-  span {
-    margin-right: 0.8rem;
-  }
-
-  svg {
-    fill: $black;
-  }
+  @include orange-button;
 
   @media (min-width: $screen-medium) {
     grid-column: 2 / 3;
