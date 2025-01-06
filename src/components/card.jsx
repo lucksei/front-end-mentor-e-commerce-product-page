@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import Catalog from "./catalog.jsx";
 
+import { useCart } from "./../hooks/cart_provider.js";
+
 function Card() {
   return (
     <div className="card">
@@ -25,7 +27,7 @@ function CardBody() {
       </p>
       <CardPrice></CardPrice>
       <CardQuantity></CardQuantity>
-      <CardCartButton></CardCartButton>
+      <CardCartButton itemId="p-0001" quantity={0}></CardCartButton>
     </div>
   );
 }
@@ -81,7 +83,14 @@ function CardQuantity() {
   );
 }
 
-function CardCartButton() {
+function CardCartButton({ itemId, quantity }) {
+  const { cartItems, addToCart, removeFromCart, clearCart } = useCart();
+
+  // TODO: in the future the itemId should be a prop of the card component
+  const onAddToCart = () => {
+    addToCart(itemId, quantity);
+  };
+
   const cartIcon = (
     <>
       <svg width="22" height="20" xmlns="http://www.w3.org/2000/svg">
@@ -93,7 +102,7 @@ function CardCartButton() {
     </>
   );
   return (
-    <button className="card-body--cart">
+    <button type="button" className="card-body--cart" onClick={onAddToCart}>
       <span>{cartIcon}</span>
       Add to cart
     </button>
