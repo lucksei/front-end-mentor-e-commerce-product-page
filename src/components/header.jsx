@@ -15,6 +15,11 @@ import { useCart } from "./../hooks/cart_provider.js";
 function Header() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const [cartOpen, setCartOpen] = useState(false);
+  const toggleCartOpen = () => {
+    setCartOpen(!cartOpen);
+  };
+
   const { getTotalItems } = useCart();
 
   /**
@@ -22,8 +27,8 @@ function Header() {
    *
    * @param {boolean} open - A boolean value indicating whether the sidebar should be open (true) or closed (false).
    */
-  const handleSidebarOpen = (open) => {
-    setSidebarOpen(open);
+  const handleSidebarOpen = (sidebarOpen) => {
+    setSidebarOpen(sidebarOpen);
   };
 
   return (
@@ -31,7 +36,7 @@ function Header() {
       <header className="header">
         <div className="header--left">
           <Sidebar
-            open={sidebarOpen}
+            sidebarOpen={sidebarOpen}
             onSidebarOpen={handleSidebarOpen}
           ></Sidebar>
           <SidebarButton onSidebarOpen={handleSidebarOpen}></SidebarButton>
@@ -40,11 +45,15 @@ function Header() {
           </h1>
         </div>
         <div className="header--right">
-          <CartButton quantity={getTotalItems()}></CartButton>
+          <CartButton
+            quantity={getTotalItems()}
+            cartOpen={cartOpen}
+            onCartOpen={toggleCartOpen}
+          ></CartButton>
           <ProfileButton></ProfileButton>
         </div>
       </header>
-      <CartModal></CartModal>
+      <CartModal open={cartOpen}></CartModal>
     </>
   );
 }
@@ -75,29 +84,28 @@ function Logo() {
  *
  * @returns {ReactElement} The sidebar element.
  */
-function Sidebar({ open, onSidebarOpen }) {
+function Sidebar({ sidebarOpen, onSidebarOpen }) {
   const sidebarRef = useRef();
   const overlayRef = useRef();
 
   useEffect(() => {
-    if (open) {
+    if (sidebarOpen) {
       sidebarRef.current.classList.remove("sidebar__deactivate");
       sidebarRef.current.classList.add("sidebar__active");
       overlayRef.current.classList.add("overlay__active");
-    } else {
-      sidebarRef.current.classList.remove("sidebar__active");
-      overlayRef.current.classList.remove("overlay__active");
-
-      // Add a 0.5 second delay before removing the class
-      sidebarRef.current.classList.add("sidebar__deactivate");
-      setTimeout(() => {
-        sidebarRef.current.classList.remove("sidebar__deactivate");
-      }, 500);
     }
   });
 
   const handleClick = () => {
     onSidebarOpen(false);
+    sidebarRef.current.classList.remove("sidebar__active");
+    overlayRef.current.classList.remove("overlay__active");
+
+    // Add a 0.5 second delay before removing the class
+    sidebarRef.current.classList.add("sidebar__deactivate");
+    setTimeout(() => {
+      sidebarRef.current.classList.remove("sidebar__deactivate");
+    }, 500);
   };
 
   return (
@@ -108,7 +116,7 @@ function Sidebar({ open, onSidebarOpen }) {
         onClick={handleClick}
       ></div>
       <div className={"sidebar"} ref={sidebarRef}>
-        <SidebarCloseButton onSidebarOpen={onSidebarOpen}></SidebarCloseButton>
+        <SidebarCloseButton onSidebarOpen={handleClick}></SidebarCloseButton>
         <ul>
           <li>Collections</li>
           <li>Men</li>
@@ -148,11 +156,8 @@ function SidebarButton({ onSidebarOpen }) {
  * @returns {ReactElement} The close button element.
  */
 function SidebarCloseButton({ onSidebarOpen }) {
-  const handleClick = () => {
-    onSidebarOpen(false);
-  };
   return (
-    <button type="button" className="sidebar--button" onClick={handleClick}>
+    <button type="button" className="sidebar--button" onClick={onSidebarOpen}>
       <img src={require("./../../images/icon-close.svg")} alt="close"></img>
     </button>
   );
@@ -163,7 +168,7 @@ function SidebarCloseButton({ onSidebarOpen }) {
  *
  * @returns {ReactElement} The cart button element.
  */
-function CartButton({ quantity }) {
+function CartButton({ quantity, cartOpen, onCartOpen }) {
   const cartIcon = (
     <svg width="22" height="20" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -175,7 +180,7 @@ function CartButton({ quantity }) {
   );
 
   return (
-    <button role="button" className="header--cart-button">
+    <button role="button" className="header--cart-button" onClick={onCartOpen}>
       {cartIcon}
       {quantity > 0 ? (
         <div className="cart-button--badge">{quantity}</div>
@@ -197,7 +202,7 @@ function ProfileButton() {
   );
 }
 
-function CartModal() {
+function CartModal({ open }) {
   const {
     cartItems,
     addToCart,
@@ -209,7 +214,7 @@ function CartModal() {
 
   return (
     <>
-      <div className="cart-modal">
+      <div className={"cart-modal" + " " + (open ? "" : "hidden")}>
         <div className="cart-modal--header">
           <h3>Cart</h3>
         </div>
