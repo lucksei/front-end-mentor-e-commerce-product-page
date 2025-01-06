@@ -1,5 +1,7 @@
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+
 
 module.exports = {
     entry: './src/index.js',
@@ -40,7 +42,12 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
-        })
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: './images/favicon-32x32.png', to: './favicon-32x32.png' },
+            ],
+        }),
     ],
 
     // Dev Server Configuration
