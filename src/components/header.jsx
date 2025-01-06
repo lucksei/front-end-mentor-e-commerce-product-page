@@ -219,25 +219,32 @@ function CartModal({ open }) {
           <h3>Cart</h3>
         </div>
         <div className="cart-modal--body">
-          {}
-          <div className="cart-modal--items">
-            {Object.keys(cartItems).map((itemId) => {
-              return (
-                <CartModalItem
-                  key={itemId}
-                  itemId={itemId}
-                  name={getProductDetails(itemId).name}
-                  price={getProductDetails(itemId).price}
-                  quantity={cartItems[itemId].quantity}
-                  discountPercent={getProductDetails(itemId).discountPercent}
-                  itemImage={getProductDetails(itemId).image}
-                ></CartModalItem>
-              );
-            })}
-          </div>
-          <button type="button" className="cart-modal--checkout-button">
-            Checkout
-          </button>
+          {getTotalItems() === 0 ? (
+            <div className="cart-modal--empty">Your cart is empty</div>
+          ) : (
+            <>
+              <div className="cart-modal--items">
+                {Object.keys(cartItems).map((itemId) => {
+                  return (
+                    <CartModalItem
+                      key={itemId}
+                      itemId={itemId}
+                      name={getProductDetails(itemId).name}
+                      price={getProductDetails(itemId).price}
+                      quantity={cartItems[itemId].quantity}
+                      discountPercent={
+                        getProductDetails(itemId).discountPercent
+                      }
+                      itemImage={getProductDetails(itemId).image}
+                    ></CartModalItem>
+                  );
+                })}
+              </div>
+              <button type="button" className="cart-modal--checkout-button">
+                Checkout
+              </button>
+            </>
+          )}
         </div>
       </div>
     </>
