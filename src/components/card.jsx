@@ -95,7 +95,6 @@ function CardQuantity({ quantity, incrementQuantity, decrementQuantity }) {
 function CardCartButton({ itemId, quantity }) {
   const { cartItems, addToCart, removeFromCart, clearCart } = useCart();
 
-  // TODO: in the future the itemId should be a prop of the card component
   const onAddToCart = () => {
     addToCart(itemId, quantity);
   };
