@@ -6,6 +6,7 @@ import './styles/style.scss';
 import Header from './components/header.jsx';
 import Card from './components/card.jsx';
 import Attribution from './components/attribution.jsx';
+import { CartProvider } from './hooks/cart_provider.js';
 
 const App = () => {
   return (
@@ -21,4 +22,8 @@ const App = () => {
 
 const container = document.getElementById('react-root');
 const root = createRoot(container);
-root.render(<App />)
+root.render(
+  <CartProvider>
+    <App />
+  </CartProvider>
+)

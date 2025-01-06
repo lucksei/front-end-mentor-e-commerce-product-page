@@ -204,7 +204,7 @@ function CartModal() {
         </div>
         <div className="cart-modal--body">
           <div className="cart-modal--items">
-            {/* <CartModalItem></CartModalItem> */}
+            <CartModalItem></CartModalItem>
           </div>
           <button type="button" className="cart-modal--checkout-button">
             Checkout
