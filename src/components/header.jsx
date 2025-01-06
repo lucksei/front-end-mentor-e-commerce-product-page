@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useCart } from "./../hooks/cart_provider.js";
 
 /**
  * A stateful functional component that renders the app header.
@@ -14,12 +15,13 @@ import React, { useEffect, useRef, useState } from "react";
 function Header() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const { getTotalItems } = useCart();
+
   /**
    * Toggles the state of the sidebar.
    *
    * @param {boolean} open - A boolean value indicating whether the sidebar should be open (true) or closed (false).
    */
-
   const handleSidebarOpen = (open) => {
     setSidebarOpen(open);
   };
@@ -38,7 +40,7 @@ function Header() {
           </h1>
         </div>
         <div className="header--right">
-          <CartButton quantity={3}></CartButton>
+          <CartButton quantity={getTotalItems()}></CartButton>
           <ProfileButton></ProfileButton>
         </div>
       </header>
@@ -196,6 +198,15 @@ function ProfileButton() {
 }
 
 function CartModal() {
+  const {
+    cartItems,
+    addToCart,
+    removeFromCart,
+    clearCart,
+    getTotalItems,
+    getProductDetails,
+  } = useCart();
+
   return (
     <>
       <div className="cart-modal">
@@ -203,8 +214,21 @@ function CartModal() {
           <h3>Cart</h3>
         </div>
         <div className="cart-modal--body">
+          {}
           <div className="cart-modal--items">
-            <CartModalItem></CartModalItem>
+            {Object.keys(cartItems).map((itemId) => {
+              return (
+                <CartModalItem
+                  key={itemId}
+                  itemId={itemId}
+                  name={getProductDetails(itemId).name}
+                  price={getProductDetails(itemId).price}
+                  quantity={cartItems[itemId].quantity}
+                  discountPercent={getProductDetails(itemId).discountPercent}
+                  itemImage={getProductDetails(itemId).image}
+                ></CartModalItem>
+              );
+            })}
           </div>
           <button type="button" className="cart-modal--checkout-button">
             Checkout
@@ -215,8 +239,26 @@ function CartModal() {
   );
 }
 
-function CartModalItem() {
-  const itemImage = require("./../../images/image-product-1.jpg");
+function CartModalItem({
+  itemId,
+  name,
+  price,
+  quantity,
+  itemImage,
+  discountPercent,
+}) {
+  const parsePrice = (price) => {
+    return `$${price.toFixed(2)}`;
+  };
+
+  const parseQuantity = (quantity) => {
+    return `x${quantity}`;
+  };
+
+  const { removeFromCart } = useCart();
+  const handleDelete = () => {
+    removeFromCart(itemId);
+  };
 
   const deleteIcon = (
     <svg width="14" height="16" xmlns="http://www.w3.org/2000/svg">
@@ -230,13 +272,19 @@ function CartModalItem() {
   return (
     <div className="cart-modal--cart-item">
       <img className="cart-item--image" src={itemImage} alt="item"></img>
-      <span className="cart-item--name">Fall Limited Edition Sneakers</span>
+      <span className="cart-item--name">{name}</span>
       <div className="cart-item--values">
-        <span className="cart-item--price-unit">$125.00</span>
-        <span className="cart-item--quantity">x3</span>
-        <span className="cart-item--price-total">$375.00</span>
+        <span className="cart-item--price-unit">
+          {parsePrice(price * (discountPercent / 100))}
+        </span>
+        <span className="cart-item--quantity">{parseQuantity(quantity)}</span>
+        <span className="cart-item--price-total">
+          {parsePrice(price * (discountPercent / 100) * quantity)}
+        </span>
       </div>
-      <button className="cart-item--delete-button">{deleteIcon}</button>
+      <button className="cart-item--delete-button" onClick={handleDelete}>
+        {deleteIcon}
+      </button>
     </div>
   );
 }

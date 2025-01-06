@@ -5,17 +5,37 @@ import Catalog from "./catalog.jsx";
 import { useCart } from "./../hooks/cart_provider.js";
 
 function Card() {
+  // React hook to set the quantity
+  let [quantity, setQuantity] = useState(0);
+
+  const incrementQuantity = () => {
+    if (quantity <= 99) {
+      setQuantity(quantity + 1);
+    }
+  };
+
+  const decrementQuantity = () => {
+    if (quantity > 0) {
+      setQuantity(quantity - 1);
+    }
+  };
+
   return (
     <div className="card">
       <Catalog></Catalog>
-      <CardBody></CardBody>
+      <CardBody
+        itemId="p-0001"
+        quantity={quantity}
+        incrementQuantity={incrementQuantity}
+        decrementQuantity={decrementQuantity}
+      ></CardBody>
     </div>
   );
 }
 
 export default Card;
 
-function CardBody() {
+function CardBody({ itemId, quantity, incrementQuantity, decrementQuantity }) {
   return (
     <div className="card-body">
       <h1>SNEAKER COMPANY</h1>
@@ -26,8 +46,12 @@ function CardBody() {
         weather can offer.
       </p>
       <CardPrice></CardPrice>
-      <CardQuantity></CardQuantity>
-      <CardCartButton itemId="p-0001" quantity={0}></CardCartButton>
+      <CardQuantity
+        quantity={quantity}
+        incrementQuantity={incrementQuantity}
+        decrementQuantity={decrementQuantity}
+      ></CardQuantity>
+      <CardCartButton itemId={itemId} quantity={quantity}></CardCartButton>
     </div>
   );
 }
@@ -52,22 +76,7 @@ function CardPrice() {
   );
 }
 
-function CardQuantity() {
-  // React hook to set the quantity
-  let [quantity, setQuantity] = useState(0);
-
-  const incrementQuantity = () => {
-    if (quantity <= 99) {
-      setQuantity(quantity + 1);
-    }
-  };
-
-  const decrementQuantity = () => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
-    }
-  };
-
+function CardQuantity({ quantity, incrementQuantity, decrementQuantity }) {
   return (
     <div className="card-body--quantity">
       <button className="quantity--button-minus" onClick={decrementQuantity}>
