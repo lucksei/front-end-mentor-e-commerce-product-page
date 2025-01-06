@@ -217,6 +217,14 @@
   margin: 0.4rem;
   z-index: 899;
 
+  @media (min-width: $screen-medium) {
+    position: fixed;
+    right: 1.3rem;
+    left: auto;
+    top: 4.5rem;
+    max-width: 300px;
+  }
+
   .cart-modal--header {
     h3 {
       font-weight: map.get($weights, "bold");
