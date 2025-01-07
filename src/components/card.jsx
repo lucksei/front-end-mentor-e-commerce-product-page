@@ -6,7 +6,7 @@ import { useCart } from "./../hooks/cart_provider.js";
 
 function Card() {
   // React hook to set the quantity
-  let [quantity, setQuantity] = useState(0);
+  let [quantity, setQuantity] = useState(1);
 
   const incrementQuantity = () => {
     if (quantity <= 99) {
@@ -15,7 +15,7 @@ function Card() {
   };
 
   const decrementQuantity = () => {
-    if (quantity > 0) {
+    if (quantity > 1) {
       setQuantity(quantity - 1);
     }
   };
